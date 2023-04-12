@@ -8,15 +8,15 @@ int main(int argc, char *argv[]) {
 	float hasil;
 	char input[30],temp;
 	address P;
-	Stack X;
+	Stack S;
 	Queue Z;
 	node Q;
 	Z.First=NULL;
 	Z.Last=NULL;
-	X.Head=NULL;
+	S.Head=NULL;
 	printf("enter expression:");
 	scanf("%s",&input);fflush(stdin);
-	convertPostfix(&Z,&X,input);
+	convertPostfix(&Z,&S,input);
 //	temp=PopStack(&X);
 //	ViewAsc(Z);
 //	ViewAscStack(X);

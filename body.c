@@ -207,7 +207,7 @@ void EnqueOperator(Queue *First,char item,node *P){
 }
 }
 
-void EnqueOperand(Queue *First,int item,node *P){
+void EnqueOperand(Queue *First,float item,node *P){
 	*P = (address) malloc (sizeof (ElmtList));
 	if(P==NULL){
 		printf("Gagal Alokasi");
@@ -231,6 +231,7 @@ void EnqueOperand(Queue *First,int item,node *P){
 void convertPostfix(Queue *Z,Stack *X,char *input){
 	node P;
 	char token,c;
+	int num3=10;
 	int i,temp;
 	float num=0,num2;
 	for(i=0;i<strlen(input);i++){
@@ -239,10 +240,15 @@ void convertPostfix(Queue *Z,Stack *X,char *input){
 			if(isdigit(token)){
 			num=num*10+(token-'0');
 			}else if(token=='.'){
-			num2=(input[i+1]-'0');
-			num2=num2/10;
-			num=num+num2;	
 			i++;
+			while(isdigit(input[i])){
+			num2=(input[i]-'0');
+			num=num+(num2/num3);	
+			num3=num3*10;
+			i++;
+			}
+			num3=10;
+			i--;
 			}
 			 if(isdigit(input[i+1])!=1&&input[i+1]!='.'){
 				EnqueOperand(&*Z,num,&P);
@@ -250,18 +256,38 @@ void convertPostfix(Queue *Z,Stack *X,char *input){
 			}
 		}else if(isOperator(token)&&X->Head!=NULL&&X->Head->oprtr!='('){
 			c=X->Head->oprtr;
-			while(derajatOperator(token)<=derajatOperator(c)&&X->Head!=NULL){
+			while(derajatOperator(token)<=derajatOperator(c)&&X->Head!=NULL&&X->Head->oprtr!='('){
 				EnqueOperator(&*Z,PopStack(&*X),&P);
 			}
 			PushStack(&*X,token,&P);
 		}else if(token==')'){
 			c=X->Head->oprtr;
-			while(c!='('){
+			while(c!='('&&X->Head->next!=NULL){
 				EnqueOperator(&*Z,PopStack(&*X),&P);
 				c=X->Head->oprtr;
 			}
-			PopStack(&*X);
-		}else{
+			if(c=='('){
+				PopStack(&*X);
+			}else{
+				printf("format yang dimasukkan salah\n");
+				break;
+			}
+		}else if(token=='('){
+			PushStack(&*X,token,&P);
+		}else if(token=='!'){
+			float a,c;
+			char t;
+			t=token;
+			if(isdigit(input[i-1])){
+				a=DequeOperand(&*Z);
+				c=faktorial(a);
+				EnqueOperand(&*Z,c,&P);
+				
+			}else{
+				printf("format yang anda masukkan salah: ");
+			}
+		}
+		else{
 			PushStack(&*X,token,&P);
 		}
 	}
@@ -340,46 +366,53 @@ double kalkulasi(address P){
 		}else if(P->data=='/'){
 			return kalkulasi(P->left) / kalkulasi(P->right);
 		}else if(P->data=='*'){
-			return kalkulasi(P->left) * kalkulasi(P->right);
+			return Perkalian(kalkulasi(P->left),kalkulasi(P->right));
 		}else if(P->data=='^'){
-			return pow(kalkulasi(P->left) , kalkulasi(P->right));
+			return Perpangkatan(kalkulasi(P->left) , kalkulasi(P->right));
 		}
 	}
 	
 	return P->operand;
 }
 
-double calculate(address root){
-	// root adalah operator
-    if(root->isOperator){
-    	// Melakukan perhitungan
-        switch(root->data){
-            case '+':{
-                return calculate(root->left) + calculate(root->right);
-                break;
-            }
-            case '-':{
-                return calculate(root->left) - calculate(root->right);
-                break;
-            }
-            case '*':{
-                return calculate(root->left) * calculate(root->right);
-                break;
-            }
-            case '/':{
-                if(calculate(root->right) == 0) {
-				}
-                else
-                    return calculate(root->left) / calculate(root->right);
-                break;
-            }
-            case '^':{
-                return pow(calculate(root->left), calculate(root->right));
-                break;
-            }
-            
-        }
-    }
-    
-    return root->operand;
+float DequeOperand(Queue *A){
+	float q;
+	node First,Last,Throw;
+	First=A->First;
+	Last=A->Last;
+	if(First==NULL){
+		printf("Queue Empty");
+	}else{
+		if(First!=Last){
+			while(First->next==Last){
+				First=First->next;
+			}
+			Throw=Last;
+			q=Last->operand;
+			A->Last=First;
+			A->Last->next=NULL;
+			free(Throw);
+			return q;
+		}else{
+			Throw=Last;
+			q=Last->operand;
+			A->Last=NULL;
+			A->First=NULL;
+			free(Throw);
+			return q;
+		}
+		
+	}
+}
+
+
+float faktorial(float n){
+float hasil=1;
+int i=1;
+
+while(i<=n){
+	hasil=hasil*i;
+	i++;
+}
+return hasil;
 }
