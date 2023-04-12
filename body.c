@@ -230,13 +230,13 @@ void EnqueOperand(Queue *First,float item,node *P){
 //float kalkulasi()
 void convertPostfix(Queue *Z,Stack *X,char *input){
 	node P;
-	char token,c;
+	char token,c,negatif;
 	int num3=10;
 	int i,temp;
 	float num=0,num2;
 	for(i=0;i<strlen(input);i++){
 		token=input[i];
-		if(isdigit(token)||token=='.'){
+		if(isdigit(token)||token=='.'||(token=='-'&&(isOperator(input[i-1])||i==0||input[i-1]=='('))){
 			if(isdigit(token)){
 			num=num*10+(token-'0');
 			}else if(token=='.'){
@@ -249,8 +249,14 @@ void convertPostfix(Queue *Z,Stack *X,char *input){
 			}
 			num3=10;
 			i--;
+			}else if(token=='-'){
+				negatif='-';
 			}
 			 if(isdigit(input[i+1])!=1&&input[i+1]!='.'){
+			 	if(negatif=='-'){
+			 		num=num*-1;
+				 }
+				negatif='\0';
 				EnqueOperand(&*Z,num,&P);
 				num=0;
 			}
@@ -384,7 +390,7 @@ float DequeOperand(Queue *A){
 		printf("Queue Empty");
 	}else{
 		if(First!=Last){
-			while(First->next==Last){
+			while(First->next!=Last){
 				First=First->next;
 			}
 			Throw=Last;
