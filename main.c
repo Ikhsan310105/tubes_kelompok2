@@ -14,7 +14,8 @@ int main(int argc, char *argv[]) {
 	Z.First=NULL;
 	Z.Last=NULL;
 	S.Head=NULL;
-	printf("enter expression:");
+	menu();
+	printf("\n\t\t\tenter expression:");
 	scanf("%s",&input);fflush(stdin);
 	convertPostfix(&Z,&S,input);
 //	temp=PopStack(&X);
