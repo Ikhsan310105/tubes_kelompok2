@@ -41,10 +41,10 @@ address CreateNode(infotype data);
 address BuildTree(infotype postfix[]);
 void PostOrder(address P);
 void ViewAsc(Queue First);
-void EnqueOperand(Queue *First,float item,node *P);
+void EnqueOperand(Queue *First,float item);
 void convertPostfix(Queue *Z,Stack *X,char *input);
 void ViewAscStack(Stack First);
-void PushStack(Stack *First,char item,node *P);
+void PushStack(Stack *First,char item, node *P);
 char PopStack(Stack *First);
 address Create_Tree(Queue Z);
 address CreateNodeOperand(float input);
@@ -56,6 +56,8 @@ float akar_pangkat_n(int x,int n);
 float Perpangkatan(float bilangan, float pangkat);
 float DequeOperand(Queue *A);
 float faktorial(float n);
+double prosesPerhitunganTrigonometri(double angka, char operator[]);
+node CreateNodeList();
 
 
 
