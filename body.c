@@ -282,7 +282,6 @@ void convertPostfix(Queue *Z,Stack *X,char *input){
 				}
 				i++;
 			}
-			
 			sudut[j]='\0';
 			angka=strtof(sudut, NULL);
 			hasil=prosesPerhitunganTrigonometri(angka,trigono);
@@ -306,6 +305,41 @@ void convertPostfix(Queue *Z,Stack *X,char *input){
 				printf("format yang dimasukkan salah\n");
 				break;
 			}
+		}else if(token == 'l'){
+			char log[10];
+			char Num[100];
+			float angka;
+			float a,hasil;
+			int j = 0,x = 0;
+			if(isdigit(input[i-1])){
+				a=DequeOperand(&*Z);
+				while(input[i]!=')'){
+					if(isdigit(input[i]) || input[i]=='.'){
+						Num[j++]=input[i];
+					} else{
+						log[x++]=input[i];
+					}
+					i++;
+				}
+				Num[j]='\0';
+				angka=strtof(Num, NULL);
+				hasil=processLogarithm(angka,a,log);
+				EnqueOperand(&*Z, hasil);	
+			}else{
+				while(input[i]!=')'){
+					if(isdigit(input[i]) || input[i]=='.'){
+						Num[j++]=input[i];
+					} else{
+						log[x++]=input[i];
+					}
+					i++;
+				}
+				Num[j]='\0';
+				angka=strtof(Num, NULL);
+				hasil=processLogarithm(angka,0,log);
+				EnqueOperand(&*Z, hasil);	
+			}
+			
 		}else if(token=='('){
 			PushStack(&*X,token, &P);
 		}else if(token=='!'){

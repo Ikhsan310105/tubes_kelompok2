@@ -58,7 +58,9 @@ float DequeOperand(Queue *A);
 float faktorial(float n);
 double prosesPerhitunganTrigonometri(double angka, char operator[]);
 node CreateNodeList();
-
+float processLogarithm(float number, float base, char *op);
+float naturalLogarithm(double number);
+float logarithm(double number, double base);
 
 
 #endif
