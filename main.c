@@ -7,27 +7,42 @@
 int main(int argc, char *argv[]) {
 	float hasil;
 	char input[30],temp;
-	address P;
+	char lagi;
 	Stack S;
 	Queue Z;
 	node Q;
-	Z.First=NULL;
-	Z.Last=NULL;
-	S.Head=NULL;
-	menu();
-	printf("\n\t\t\tenter expression:");
-	scanf("%s",&input);fflush(stdin);
-	convertPostfix(&Z,&S,input);
+	for(;;){
+		system("cls");
+		address P;
+		Z.First=NULL;
+		Z.Last=NULL;
+		S.Head=NULL;
+		menu();
+		printf("\n\t\t\tenter expression:");
+		scanf("%s",&input);
+		fflush(stdin);
+		convertPostfix(&Z,&S,input);
+		P=Create_Tree(Z);
+		hasil=kalkulasi(P);
+		printf("\t\t\thasilnya adalah %g\n",hasil);
+		printf("\t\t\tPostOrder: ");
+		PostOrder(P);
+		printf("\n\t\t\tLagi?(y/n)");
+		fflush(stdin);
+		scanf("%c", &lagi);
+		if(lagi=='n'){
+			return 0;
+		}else{
+			P->left=NULL;
+			P->right=NULL;
+			free(P);
+		}
+	}
+}
+
 //	temp=PopStack(&X);
 //	ViewAsc(Z);
 //	ViewAscStack(X);
 //	printf("input: %s", input);
 //	InfixToPostfix("1*(2+3)/4^5-6", postfix);
 //	printf("postfix: %s", postfix);
-	P=Create_Tree(Z);
-	hasil=kalkulasi(P);
-	printf("hasilnya adalah %g\n",hasil);
-	printf("PostOrder: ");
-	PostOrder(P);
-	return 0;
-}

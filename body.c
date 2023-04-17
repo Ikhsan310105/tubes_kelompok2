@@ -112,9 +112,9 @@ void PostOrder(address P){
 		PostOrder(left(P));
 		PostOrder(right(P));
 		if(P->isOperator==1){
-		printf("%c ", P->data);
+			printf("%c ", P->data);
 		}else{
-		printf("%g ",P->operand);
+			printf("%g ",P->operand);
 		}
 	}
 }
@@ -336,7 +336,7 @@ void convertPostfix(Queue *Z,Stack *X,char *input){
 				}
 				Num[j]='\0';
 				angka=strtof(Num, NULL);
-				hasil=processLogarithm(angka,0,log);
+				hasil=processLogarithm(angka,10,log);
 				EnqueOperand(&*Z, hasil);	
 			}
 			
@@ -413,7 +413,7 @@ address CreateNodeOperand(float input){
 }
 
 address CreateNodeOperator(char input){
-		address P;
+	address P;
 	P = (address) malloc (sizeof (Tree));
 	P->data=input;
 	P->isOperator=1;
