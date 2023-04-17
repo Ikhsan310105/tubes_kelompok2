@@ -352,7 +352,8 @@ void convertPostfix(Queue *Z,Stack *X,char *input){
 				EnqueOperand(&*Z,c);
 				
 			}else{
-				printf("format yang anda masukkan salah: ");
+				printf("\t\t\tformat yang anda masukkan salah: ");
+				Z->invalid=1;
 			}
 		}
 		else{

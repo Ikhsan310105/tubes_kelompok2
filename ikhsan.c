@@ -29,7 +29,7 @@ float processLogarithm(float number, float base, char *op){
 		return naturalLogarithm(number);
 	}
 	else{
-		printf("Operator is invalid: %s", op);
+		printf("\t\t\tOperator is invalid: %s", op);
         exit(1);
 	}
 }

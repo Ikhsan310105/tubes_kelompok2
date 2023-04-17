@@ -25,12 +25,13 @@ typedef struct Node{
 }ElmtList;
 
 typedef struct{
-node Head;
+	node Head;
 }Stack;
 
 typedef struct {
-node First;
-node Last;
+	node First;
+	node Last;
+	int invalid;
 }Queue;
 
 
