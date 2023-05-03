@@ -353,7 +353,7 @@ void convertPostfix(Queue *Z,Stack *X,char *input){
 				
 			}else{
 				printf("\t\t\tformat yang anda masukkan salah: ");
-				Z->invalid=1;
+//				Z->invalid=1;
 			}
 		}
 		else{

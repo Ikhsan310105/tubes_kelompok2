@@ -31,7 +31,7 @@ typedef struct{
 typedef struct {
 	node First;
 	node Last;
-	int invalid;
+//	int invalid;
 }Queue;
 
 

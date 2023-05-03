@@ -16,33 +16,33 @@ int main(int argc, char *argv[]) {
 		address P;
 		Z.First=NULL;
 		Z.Last=NULL;
-		Z.invalid=0;
+//		Z.invalid=0;
 		S.Head=NULL;
 		menu();
 		printf("\n\t\t\tenter expression:");
 		scanf("%s",&input);
 		fflush(stdin);
 		convertPostfix(&Z,&S,input);
-		if(Z.invalid==0){
-			P=Create_Tree(Z);
-			hasil=kalkulasi(P);
-			printf("\n\t\t\thasilnya adalah %g\n",hasil);
-			printf("\t\t\tPostOrder: ");
-			PostOrder(P);
-			printf("\n\t\t\tLagi?(y/n)");
-			fflush(stdin);
-			scanf("%c", &lagi);
-			if(lagi=='n'){
-				return 0;
-			}else{
-				P->left=NULL;
-				P->right=NULL;
-				free(P);
-			}
+//		if(Z.invalid==0){
+		P=Create_Tree(Z);
+		hasil=kalkulasi(P);
+		printf("\n\t\t\thasilnya adalah %g\n",hasil);
+		printf("\t\t\tPostOrder: ");
+		PostOrder(P);
+		printf("\n\t\t\tLagi?(y/n)");
+		fflush(stdin);
+		scanf("%c", &lagi);
+		if(lagi=='n'){
+			return 0;
 		}else{
-			printf("\n");
-			system("pause");
+			P->left=NULL;
+			P->right=NULL;
+			free(P);
 		}
+//		}else{
+//			printf("\n");
+//			system("pause");
+//		}
 	}
 }
 
