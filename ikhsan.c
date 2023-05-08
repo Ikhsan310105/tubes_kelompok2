@@ -3,42 +3,75 @@
 #include<math.h>
 #include"header.h"
 
-float logarithm(double number, double base);
-float naturalLogarithm(double number);
-
 //rumus logaritma
-float logarithm(double number, double base)
+double logarithm(double number, double base)
 {   
     return log(number)/log(base);
 }
 
 //rumus logaritma natural
-float naturalLogarithm(double number)
+double naturalLogarithm(double number)
 {	
     return log(number);
 }
 
-int validasiLogarithm(char *op){
-	if(strcmp(op,"log(")==0){
-		return 1;
-	}
-	else if (strcmp(op,"ln(")==0){
-		return 1;
-	}
-	else{
-		printf("\t\t\tInvalid Operator", op);
-        return 0;
-	}
-}
+//				while(input[i]!=')'){
+//					if(isdigit(input[i]) || input[i]=='.'){
+//						num[j++]=input[i];
+//					} else{
+//						log[x++]=input[i];
+//					}
+//					i++;
+//				}
+//				num[j]='\0';
+//				angka=strtof(num, NULL);
+//				hasil=processLogarithm(angka,10,log,&*valid);
+//				EnqueOperand(&*Z, hasil);
 
-float processLogarithm(float number, float base, char *op){
-	int baseInt = base;
-	float baseDouble = 10;
-	
-	if(strcmp(op,"log(")==0){
-		return logarithm(number,base);
-	}
-	else if (strcmp(op,"ln(")==0){
-		return naturalLogarithm(number);
-	}
-}
+//				while(input[i]!=')'){
+//					if(isdigit(input[i]) || input[i]=='.'){
+//						num[j++]=input[i];
+//					} else{
+//						log[x++]=input[i];
+//					}
+//					i++;
+//				}
+//				num[j]='\0';
+//				angka=strtof(num, NULL);
+//				hasil=processLogarithm(angka,10,log,&*valid);
+//				EnqueOperand(&*Z, hasil);	
+
+//			char log[6];
+//			char Num[20];
+//			float angka;
+//			float a,hasil;
+//			int h=0;
+//			int j = 0,x = 0;
+//			if(isdigit(input[i-1])){
+//				a=DequeOperand(&*Z);
+//				while(input[i]!=')'){
+//					if(isdigit(input[i]) || input[i]=='.'){
+//						Num[j++]=input[i];
+//					} else{
+//						log[x++]=input[i];
+//					}
+//					i++;
+//				}
+//				Num[j]='\0';
+//				angka=strtof(Num, NULL);
+//				hasil=processLogarithm(angka,a,log,&*valid);
+//				EnqueOperand(&*Z, hasil);	
+//			}else{
+//				while(input[i]!=')'){
+//					if(isdigit(input[i]) || input[i]=='.'){
+//						Num[j++]=input[i];
+//					} else{
+//						log[x++]=input[i];
+//					}
+//					i++;
+//				}
+//				Num[j]='\0';
+//				angka=strtof(Num, NULL);
+//				hasil=processLogarithm(angka,10,log,&*valid);
+//				EnqueOperand(&*Z, hasil);	
+//			}

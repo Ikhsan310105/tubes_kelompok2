@@ -61,8 +61,8 @@ int derajatOperator(infotype oper){
 	} else if(oper=='^' || oper=='v'){
 		return 3;
 	} else{
-		printf("Invalid Operator", oper);
-        return 0;
+		printf("Error, Operator Tidak Diketahui: %c", oper);
+        exit(1);
 	}
 }
 
@@ -234,7 +234,7 @@ void EnqueOperand(Queue *Q,float item){
 	}
 }
 //float kalkulasi()
-void convertPostfix(Queue *Z,Stack *X,char *input,int *invalid){
+void convertPostfix(Queue *Z,Stack *X,char *input,int *valid){
 	node P;
 	char token,c,negatif;
 	int num3=10;
@@ -272,55 +272,42 @@ void convertPostfix(Queue *Z,Stack *X,char *input,int *invalid){
 			char trigono[7];
 			char sudut[20];
 			int x=0;
-			int f;
 			j=0;
-			float hasil;
+			float hasil,f;
 			if(!isdigit(input[i-1])){
 				while(input[i]!=')'){
 					if(isdigit(input[i]) || input[i]=='.'){
 						sudut[j++]=input[i];
-					}else{
+					} else{
 						trigono[x++]=input[i];
 					}
 					i++;
 				}
 				sudut[j]='\0';
 				angka=strtof(sudut, NULL);
-				*invalid=validasiTrigono(trigono);
-				temp=*invalid;
-				if(temp==1){
-					hasil=prosesPerhitunganTrigonometri(angka,trigono);
-					EnqueOperand(&*Z, hasil);
-				}
+				hasil=prosesPerhitunganTrigonometri(angka,trigono,&*valid);
+				EnqueOperand(&*Z, hasil);	
 			}else{
 				f=DequeOperand(&*Z);
 				while(input[i]!=')'){
 					if(isdigit(input[i]) || input[i]=='.'){
 						sudut[j++]=input[i];
-					}else{
+					} else{
 						trigono[x++]=input[i];
 					}
 					i++;
 				}
 				sudut[j]='\0';
 				angka=strtof(sudut, NULL);
-				*invalid=validasiTrigono(trigono);
-				temp=*invalid;
-				if(temp==1){
-					hasil=f*prosesPerhitunganTrigonometri(angka,trigono);
-					EnqueOperand(&*Z, hasil);
-				}				
+				hasil=f*prosesPerhitunganTrigonometri(angka,trigono,&*valid);
+				EnqueOperand(&*Z, hasil);
 			}
 		}else if(isOperator(token)&&X->Head!=NULL&&X->Head->oprtr!='('){
 			c=X->Head->oprtr;
-			if(derajatOperator(token)!=0){
-				while(derajatOperator(token)<=derajatOperator(c)&&X->Head!=NULL&&X->Head->oprtr!='('){
-					EnqueOperator(&*Z,PopStack(&*X));
-				}
-				PushStack(&*X,token, &P);
-			}else{
-				*invalid=0;
+			while(derajatOperator(token)<=derajatOperator(c)&&X->Head!=NULL&&X->Head->oprtr!='('){
+				EnqueOperator(&*Z,PopStack(&*X));
 			}
+			PushStack(&*X,token, &P);
 		}else if(token==')'){
 			c=X->Head->oprtr;
 			while(c!='('&&X->Head->next!=NULL){
@@ -330,52 +317,71 @@ void convertPostfix(Queue *Z,Stack *X,char *input,int *invalid){
 			if(c=='('){
 				PopStack(&*X);
 			}else{
-				printf("Invalid Operator\n");
+				printf("format yang dimasukkan salah\n");
 				break;
 			}
 		}else if(token == 'l'){
-			char log[10];
-			char Num[100];
-			float angka;
-			float a,hasil;
-			int j = 0,x = 0;
+			char num[20];
+			int x=0;
+			j=0;
+			double hasil;
+			float f,o;
 			if(isdigit(input[i-1])){
-				a=DequeOperand(&*Z);
-				while(input[i]!=')'){
-					if(isdigit(input[i]) || input[i]=='.'){
-						Num[j++]=input[i];
-					} else{
-						log[x++]=input[i];
+				o=DequeOperand(&*Z);
+				if((input[i+1]=='o')&&(input[i+2]=='g')&&(input[i+3]=='(')){
+					i=i+4;
+					while((input[i]!=')')&&(isdigit(input[i]))||(input[i]!=')')&&(input[i]=='.')){
+						num[j++]=input[i];
+						i++;
 					}
-					i++;
-				}
-				Num[j]='\0';
-				angka=strtof(Num, NULL);
-				*invalid=validasiLogarithm(log);
-				temp=*invalid;
-				if(temp==1){
-					hasil=processLogarithm(angka,a,log);
-					EnqueOperand(&*Z, hasil);
+					num[j]='\0';
+					if(input[i]==')'){
+						angka=strtof(num, NULL);
+						hasil=logarithm(angka,o);
+						EnqueOperand(&*Z, hasil);
+					}else{
+						*valid=0;
+					}
+				}else{
+					*valid=0;
 				}	
 			}else{
-				while(input[i]!=')'){
-					if(isdigit(input[i]) || input[i]=='.'){
-						Num[j++]=input[i];
-					} else{
-						log[x++]=input[i];
+				if((input[i+1]=='o')&&(input[i+2]=='g')&&(input[i+3]=='(')){
+					i=i+4;
+					while((input[i]!=')')&&(isdigit(input[i]))||(input[i]!=')')&&(input[i]=='.')){
+						num[j++]=input[i];
+						i++;
 					}
-					i++;
-				}
-				Num[j]='\0';
-				angka=strtof(Num, NULL);
-				*invalid=validasiLogarithm(log);
-				temp=*invalid;
-				if(temp==1){
-					hasil=processLogarithm(angka,10,log);
-					EnqueOperand(&*Z, hasil);
+					num[j]='\0';
+					if(input[i]==')'){
+						angka=strtof(num, NULL);
+						hasil=logarithm(angka,10);
+						EnqueOperand(&*Z, hasil);
+					}else{
+						*valid=0;
+					}
+				}else if((input[i+1]=='n')&&(input[i+2]=='(')){
+					i=i+3;
+					while((input[i]!=')')&&(isdigit(input[i]))||(input[i]!=')')&&(input[i]=='.')){
+						num[j++]=input[i];
+						i++;
+					}
+					num[j]='\0';
+					if(input[i]==')'){
+						angka=strtof(num, NULL);
+						if(angka==0){
+							*valid=3;
+						}else{
+							hasil=naturalLogarithm(angka);
+							EnqueOperand(&*Z, hasil);
+						}
+					}else{
+						*valid=0;
+					}
+				}else{
+					*valid=0;
 				}
 			}
-			
 		}else if(token=='('){
 			PushStack(&*X,token, &P);
 		}else if(token=='!'){
@@ -388,8 +394,7 @@ void convertPostfix(Queue *Z,Stack *X,char *input,int *invalid){
 				EnqueOperand(&*Z,c);
 				
 			}else{
-				printf("\t\t\tInvalid Operator: ");
-				*invalid=0;
+				printf("\t\t\tformat yang anda masukkan salah: ");
 //				Z->invalid=1;
 			}
 		}
@@ -525,37 +530,7 @@ float faktorial(float n){
 	return hasil;
 }
 
-int validasiTrigono(char operator[]){
-	if((strcmp(operator,"sin(")==0)||(strcmp(operator,"cos(")==0)||(strcmp(operator,"tan(")==0)||(strcmp(operator,"asin(")==0)||(strcmp(operator,"acos(")==0)||(strcmp(operator,"atan(")==0)||(strcmp(operator,"csc(")==0)||(strcmp(operator,"sec(")==0)||(strcmp(operator,"cot(")==0)){
-		return 1;
-	}else{
-		if(strcmp(operator,"SIN")==0||strcmp(operator,"SIN(")==0||strcmp(operator,"sin")==0){
-//			printf("Error, operator yang anda masukkan: %s, seharusnya sin(...), contoh sin(60)", operator);
-		}else if(strcmp(operator,"COS")==0||strcmp(operator,"COS(")==0||strcmp(operator,"cos")==0){
-//			printf("Error, operator yang anda masukkan: %s, seharusnya cos(...), contoh cos(45)", operator);
-		}else if(strcmp(operator,"TAN")==0||strcmp(operator,"TAN(")==0||strcmp(operator,"tan")==0){
-//			printf("Error, operator yang anda masukkan: %s, seharusnya tan(...), contoh tan(30)", operator);
-		}else if(strcmp(operator,"ASIN")==0||strcmp(operator,"ASIN(")==0||strcmp(operator,"asin")==0){
-//			printf("Error, operator yang anda masukkan: %s, seharusnya asin(...), contoh asin(0.5)", operator);
-		}else if(strcmp(operator,"ACOS")==0||strcmp(operator,"ACOS(")==0||strcmp(operator,"acos")==0){
-//			printf("Error, operator yang anda masukkan: %s, seharusnya acos(...), contoh acos(0.5)", operator);
-		}else if(strcmp(operator,"ATAN")==0||strcmp(operator,"ATAN(")==0||strcmp(operator,"atan")==0){
-//			printf("Error, operator yang anda masukkan: %s, seharusnya atan(...), contoh atan(0.5)", operator);
-		}else if(strcmp(operator,"CSC")==0||strcmp(operator,"CSC(")==0||strcmp(operator,"csc")==0){
-//			printf("Error, operator yang anda masukkan: %s, seharusnya csc(...), contoh csc(40)", operator);
-		}else if(strcmp(operator,"SEC")==0||strcmp(operator,"SEC(")==0||strcmp(operator,"sec")==0){
-//			printf("Error, operator yang anda masukkan: %s, seharusnya sec(...), contoh sec(0.5)", operator);
-		}else if(strcmp(operator,"COT")==0||strcmp(operator,"COT(")==0||strcmp(operator,"cot")==0){
-//			printf("Error, operator yang anda masukkan: %s, seharusnya COT(...), contoh cot(0.5)", operator);
-		}else{
-			printf("\t\t\tInvalid Operator", operator);
-		}
-		printf("\t\t\tInvalid Operator", operator);
-        return 0;
-	}
-}
-
-double prosesPerhitunganTrigonometri(double angka, char operator[]){
+double prosesPerhitunganTrigonometri(double angka, char operator[],int *valid){
 	if(strcmp(operator,"sin(")==0){
 		return operasiSinus(angka);
 	}else if(strcmp(operator,"cos(")==0){
@@ -574,5 +549,8 @@ double prosesPerhitunganTrigonometri(double angka, char operator[]){
 		return operasiSecan(angka);
 	}else if(strcmp(operator,"cot(")==0){
 		return operasiCotangen(angka);
+	}else{
+        *valid=0;
+        return 0;
 	}
 }

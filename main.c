@@ -8,45 +8,40 @@ int main(int argc, char *argv[]) {
 	float hasil;
 	char input[30],temp;
 	char lagi;
-	int invalid;
+	int valid;
 	Stack S;
 	Queue Z;
 	node Q;
-	for(;;){
+	do{
 		system("cls");
 		address P;
+		valid=1;
 		Z.First=NULL;
 		Z.Last=NULL;
 //		Z.invalid=0;
 		S.Head=NULL;
-		invalid=1;
 		menu();
 		printf("\n\t\t\tenter expression:");
 		scanf("%s",&input);
 		fflush(stdin);
-		convertPostfix(&Z,&S,input,&invalid);
-		if(invalid==1){
-	//		if(Z.invalid==0){
+		convertPostfix(&Z,&S,input,&valid);
+		if(valid==1){
 			P=Create_Tree(Z);
 			hasil=kalkulasi(P);
-			printf("\n\t\t\thasilnya adalah %g\n",hasil);
+			printf("\n\t\t\thasilnya adalah %.2f\n",hasil);
 			printf("\t\t\tPostOrder: ");
 			PostOrder(P);
-			printf("\n\t\t\tLagi?(y/n)");
-			fflush(stdin);
-			scanf("%c", &lagi);
-			if(lagi=='n'){
-				return 0;
-			}else{
-				P->left=NULL;
-				P->right=NULL;
-			}
+		}else if(valid==3){
+			printf("\t\t\tln(0)=Tidak Terdefinisi");
 		}else{
-			printf("\n");
-			printf("\t\t\tisi sesuai aturan\n");
-			system("pause");
+			printf("\t\t\tInvalid Operator");
 		}
-	}
+		fflush(stdin);
+		printf("\n\t\t\tLagi?(y/n)");
+		scanf("%c", &lagi);
+	}while(lagi=='y');
+	
+	return 0;
 }
 
 //	temp=PopStack(&X);
