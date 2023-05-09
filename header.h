@@ -43,7 +43,11 @@ address BuildTree(infotype postfix[]);
 void PostOrder(address P);
 void ViewAsc(Queue First);
 void EnqueOperand(Queue *First,float item);
+<<<<<<< HEAD
 void convertPostfix(Queue *Z,Stack *X,char *input);
+=======
+void convertPostfix(Queue *Z,Stack *X,char *input,int *valid);
+>>>>>>> ikhsan
 void ViewAscStack(Stack First);
 void PushStack(Stack *First,char item, node *P);
 char PopStack(Stack *First);
@@ -57,11 +61,19 @@ float akar_pangkat_n(int x,int n);
 float Perpangkatan(float bilangan, float pangkat);
 float DequeOperand(Queue *A);
 float faktorial(float n);
+<<<<<<< HEAD
 double prosesPerhitunganTrigonometri(double angka, char operator[]);
 node CreateNodeList();
 float processLogarithm(float number, float base, char *op);
 float naturalLogarithm(double number);
 float logarithm(double number, double base);
+=======
+double prosesPerhitunganTrigonometri(double angka, char operator[],int *valid);
+node CreateNodeList();
+double processLogarithm(double angka,double base, char *operator,int *valid);
+double naturalLogarithm(double number);
+double logarithm(double number, double base);
+>>>>>>> ikhsan
 
 
 #endif

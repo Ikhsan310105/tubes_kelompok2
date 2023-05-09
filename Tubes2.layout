@@ -1,13 +1,21 @@
 [Editors]
 Order=3,1,0,5,2,6,4
+<<<<<<< HEAD
 Focused=6
 [Editor_0]
 CursorCol=1
 CursorRow=19
+=======
+Focused=1
+[Editor_0]
+CursorCol=17
+CursorRow=33
+>>>>>>> ikhsan
 TopLine=7
 LeftChar=1
 [Editor_1]
 CursorCol=5
+<<<<<<< HEAD
 CursorRow=357
 TopLine=302
 LeftChar=1
@@ -15,11 +23,24 @@ LeftChar=1
 CursorCol=1
 CursorRow=34
 TopLine=9
+=======
+CursorRow=384
+TopLine=531
+LeftChar=1
+[Editor_2]
+CursorCol=57
+CursorRow=62
+TopLine=42
+>>>>>>> ikhsan
 LeftChar=1
 [Editor_3]
 CursorCol=8
 CursorRow=49
+<<<<<<< HEAD
 TopLine=1
+=======
+TopLine=13
+>>>>>>> ikhsan
 LeftChar=1
 [Editor_4]
 CursorCol=65
@@ -32,7 +53,12 @@ CursorRow=10
 TopLine=4
 LeftChar=1
 [Editor_6]
+<<<<<<< HEAD
 CursorCol=15
 CursorRow=1
+=======
+CursorCol=24
+CursorRow=15
+>>>>>>> ikhsan
 TopLine=1
 LeftChar=1

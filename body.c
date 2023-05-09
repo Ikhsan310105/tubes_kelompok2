@@ -233,8 +233,8 @@ void EnqueOperand(Queue *Q,float item){
 		Q->Last=P;
 	}
 }
-//float kalkulasi()
-void convertPostfix(Queue *Z,Stack *X,char *input){
+
+void convertPostfix(Queue *Z,Stack *X,char *input,int *valid){
 	node P;
 	char token,c,negatif;
 	int num3=10;
@@ -273,20 +273,35 @@ void convertPostfix(Queue *Z,Stack *X,char *input){
 			char sudut[20];
 			int x=0;
 			j=0;
-			float hasil;
-			while(input[i]!=')'){
-				if(isdigit(input[i]) || input[i]=='.'){
-					sudut[j++]=input[i];
-				} else{
-					trigono[x++]=input[i];
+			float hasil,f;
+			if(!isdigit(input[i-1])){
+				while(input[i]!=')'){
+					if(isdigit(input[i]) || input[i]=='.'){
+						sudut[j++]=input[i];
+					} else{
+						trigono[x++]=input[i];
+					}
+					i++;
 				}
-				i++;
+				sudut[j]='\0';
+				angka=strtof(sudut, NULL);
+				hasil=prosesPerhitunganTrigonometri(angka,trigono,&*valid);
+				EnqueOperand(&*Z, hasil);	
+			}else{
+				f=DequeOperand(&*Z);
+				while(input[i]!=')'){
+					if(isdigit(input[i]) || input[i]=='.'){
+						sudut[j++]=input[i];
+					} else{
+						trigono[x++]=input[i];
+					}
+					i++;
+				}
+				sudut[j]='\0';
+				angka=strtof(sudut, NULL);
+				hasil=f*prosesPerhitunganTrigonometri(angka,trigono,&*valid);
+				EnqueOperand(&*Z, hasil);
 			}
-			sudut[j]='\0';
-			angka=strtof(sudut, NULL);
-			hasil=prosesPerhitunganTrigonometri(angka,trigono);
-		
-			EnqueOperand(&*Z, hasil);	
 		}else if(isOperator(token)&&X->Head!=NULL&&X->Head->oprtr!='('){
 			c=X->Head->oprtr;
 			while(derajatOperator(token)<=derajatOperator(c)&&X->Head!=NULL&&X->Head->oprtr!='('){
@@ -306,40 +321,67 @@ void convertPostfix(Queue *Z,Stack *X,char *input){
 				break;
 			}
 		}else if(token == 'l'){
-			char log[10];
-			char Num[100];
-			float angka;
-			float a,hasil;
-			int j = 0,x = 0;
+			char num[20];
+			int x=0;
+			j=0;
+			double hasil;
+			float f,o;
 			if(isdigit(input[i-1])){
-				a=DequeOperand(&*Z);
-				while(input[i]!=')'){
-					if(isdigit(input[i]) || input[i]=='.'){
-						Num[j++]=input[i];
-					} else{
-						log[x++]=input[i];
+				o=DequeOperand(&*Z);
+				if((input[i+1]=='o')&&(input[i+2]=='g')&&(input[i+3]=='(')){
+					i=i+4;
+					while((input[i]!=')')&&(isdigit(input[i]))||(input[i]!=')')&&(input[i]=='.')){
+						num[j++]=input[i];
+						i++;
 					}
-					i++;
-				}
-				Num[j]='\0';
-				angka=strtof(Num, NULL);
-				hasil=processLogarithm(angka,a,log);
-				EnqueOperand(&*Z, hasil);	
+					num[j]='\0';
+					if(input[i]==')'){
+						angka=strtof(num, NULL);
+						hasil=logarithm(angka,o);
+						EnqueOperand(&*Z, hasil);
+					}else{
+						*valid=0;
+					}
+				}else{
+					*valid=0;
+				}	
 			}else{
-				while(input[i]!=')'){
-					if(isdigit(input[i]) || input[i]=='.'){
-						Num[j++]=input[i];
-					} else{
-						log[x++]=input[i];
+				if((input[i+1]=='o')&&(input[i+2]=='g')&&(input[i+3]=='(')){
+					i=i+4;
+					while((input[i]!=')')&&(isdigit(input[i]))||(input[i]!=')')&&(input[i]=='.')){
+						num[j++]=input[i];
+						i++;
 					}
-					i++;
+					num[j]='\0';
+					if(input[i]==')'){
+						angka=strtof(num, NULL);
+						hasil=logarithm(angka,10);
+						EnqueOperand(&*Z, hasil);
+					}else{
+						*valid=0;
+					}
+				}else if((input[i+1]=='n')&&(input[i+2]=='(')){
+					i=i+3;
+					while((input[i]!=')')&&(isdigit(input[i]))||(input[i]!=')')&&(input[i]=='.')){
+						num[j++]=input[i];
+						i++;
+					}
+					num[j]='\0';
+					if(input[i]==')'){
+						angka=strtof(num, NULL);
+						if(angka==0){
+							*valid=3;
+						}else{
+							hasil=naturalLogarithm(angka);
+							EnqueOperand(&*Z, hasil);
+						}
+					}else{
+						*valid=0;
+					}
+				}else{
+					*valid=0;
 				}
-				Num[j]='\0';
-				angka=strtof(Num, NULL);
-				hasil=processLogarithm(angka,10,log);
-				EnqueOperand(&*Z, hasil);	
 			}
-			
 		}else if(token=='('){
 			PushStack(&*X,token, &P);
 		}else if(token=='!'){
@@ -488,11 +530,10 @@ float faktorial(float n){
 	return hasil;
 }
 
-double prosesPerhitunganTrigonometri(double angka, char operator[]){
+double prosesPerhitunganTrigonometri(double angka, char operator[],int *valid){
 	if(strcmp(operator,"sin(")==0){
 		return operasiSinus(angka);
-	}
-	else if(strcmp(operator,"cos(")==0){
+	}else if(strcmp(operator,"cos(")==0){
 		return operasiCosinus(angka);
 	}else if(strcmp(operator,"tan(")==0){
 		return operasiTangen(angka);
@@ -508,29 +549,8 @@ double prosesPerhitunganTrigonometri(double angka, char operator[]){
 		return operasiSecan(angka);
 	}else if(strcmp(operator,"cot(")==0){
 		return operasiCotangen(angka);
-	}
-	else{
-		if(strcmp(operator,"SIN")==0||strcmp(operator,"SIN(")==0||strcmp(operator,"sin")==0){
-			printf("Error, operator yang anda masukkan: %s, seharusnya sin(...), contoh sin(60)", operator);
-		}else if(strcmp(operator,"COS")==0||strcmp(operator,"COS(")==0||strcmp(operator,"cos")==0){
-			printf("Error, operator yang anda masukkan: %s, seharusnya cos(...), contoh cos(45)", operator);
-		}else if(strcmp(operator,"TAN")==0||strcmp(operator,"TAN(")==0||strcmp(operator,"tan")==0){
-			printf("Error, operator yang anda masukkan: %s, seharusnya tan(...), contoh tan(30)", operator);
-		}else if(strcmp(operator,"ASIN")==0||strcmp(operator,"ASIN(")==0||strcmp(operator,"asin")==0){
-			printf("Error, operator yang anda masukkan: %s, seharusnya asin(...), contoh asin(0.5)", operator);
-		}else if(strcmp(operator,"ACOS")==0||strcmp(operator,"ACOS(")==0||strcmp(operator,"acos")==0){
-			printf("Error, operator yang anda masukkan: %s, seharusnya acos(...), contoh acos(0.5)", operator);
-		}else if(strcmp(operator,"ATAN")==0||strcmp(operator,"ATAN(")==0||strcmp(operator,"atan")==0){
-			printf("Error, operator yang anda masukkan: %s, seharusnya atan(...), contoh atan(0.5)", operator);
-		}else if(strcmp(operator,"CSC")==0||strcmp(operator,"CSC(")==0||strcmp(operator,"csc")==0){
-			printf("Error, operator yang anda masukkan: %s, seharusnya csc(...), contoh csc(40)", operator);
-		}else if(strcmp(operator,"SEC")==0||strcmp(operator,"SEC(")==0||strcmp(operator,"sec")==0){
-			printf("Error, operator yang anda masukkan: %s, seharusnya sec(...), contoh sec(0.5)", operator);
-		}else if(strcmp(operator,"COT")==0||strcmp(operator,"COT(")==0||strcmp(operator,"cot")==0){
-			printf("Error, operator yang anda masukkan: %s, seharusnya COT(...), contoh cot(0.5)", operator);
-		}else{
-			printf("Operator Tidak Diketahui sin: %s", operator);
-		}
-        exit(1);
+	}else{
+        *valid=0;
+        return 0;
 	}
 }
