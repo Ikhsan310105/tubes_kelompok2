@@ -3,12 +3,12 @@ Order=0,3,1,2,5,4,6
 <<<<<<< HEAD
 Focused=1
 [Editor_0]
-CursorCol=23
-CursorRow=32
+CursorCol=11
+CursorRow=52
 =======
 Focused=1
-TopLine=33
-LeftChar=1
+TopLine=40
+LeftChar=6
 [Editor_0]
 CursorCol=17
 CursorRow=33
@@ -16,15 +16,15 @@ CursorRow=33
 TopLine=7
 LeftChar=1
 [Editor_1]
-CursorCol=42
+CursorCol=39
 <<<<<<< HEAD
-CursorRow=270
-TopLine=269
+CursorRow=411
+TopLine=402
 LeftChar=1
 [Editor_2]
-CursorCol=8
-CursorRow=13
-TopLine=9
+CursorCol=41
+CursorRow=46
+TopLine=35
 =======
 CursorRow=384
 TopLine=531
@@ -36,10 +36,10 @@ TopLine=42
 >>>>>>> ikhsan
 LeftChar=1
 [Editor_3]
-CursorCol=8
-CursorRow=49
+CursorCol=34
+CursorRow=93
 <<<<<<< HEAD
-TopLine=4
+TopLine=74
 =======
 TopLine=13
 >>>>>>> ikhsan
@@ -52,7 +52,7 @@ LeftChar=1
 [Editor_5]
 CursorCol=15
 CursorRow=1
-TopLine=38
+TopLine=1
 LeftChar=1
 [Editor_6]
 <<<<<<< HEAD
