@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[]) {
 	float hasil;
-	char input[30],temp;
+	char input[30],temp,temp1[20];
 	char lagi;
 	int valid;
 	Queue Z;
@@ -23,8 +23,15 @@ int main(int argc, char *argv[]) {
 		fflush(stdin);
 		convertPostfix(&Z,input,&valid);
 		if(valid==1){
+			insert_to_history(input);
 			P=Create_Tree(Z);
 			hasil=kalkulasi(P);
+			gcvt(hasil,20,temp1);
+			insert_to_history("=");
+			insert_to_history(temp1);
+			insert_to_history("\n");
+			insert_to_history("--------------------------------------------------------------------");
+			insert_to_history("\n");
 			printf("\n\t\t\thasilnya adalah %.2f\n",hasil);
 			printf("\t\t\tPostOrder: ");
 			PostOrder(P);
@@ -32,8 +39,14 @@ int main(int argc, char *argv[]) {
 			printf("\t\t\tMATH ERROR");
 		}
 		fflush(stdin);
-		printf("\n\t\t\tLagi?(y/n)");
-		scanf("%c", &lagi);
+		printf("\n\t\t\tLagi?(y/n/h)");
+		scanf("%c", &lagi);fflush(stdin);
+			while(lagi=='h'){
+			system ("cls");
+			tampilkan_history();
+			printf("\n Lakukan Operasi Lagi?(y/n/h)");
+			scanf("%c", &lagi);fflush(stdin);
+		}
 	}while(lagi=='y');
 	
 	return 0;

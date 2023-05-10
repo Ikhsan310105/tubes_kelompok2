@@ -72,6 +72,7 @@ double operasiCotangen(double sudut);
 double operasiAsin(double bilangan);
 double operasiAcos(double bilangan);
 double operasiAtan(double bilangan);
+void tampilkan_history();
 
 
 #endif

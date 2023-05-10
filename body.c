@@ -267,13 +267,16 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 			float f;
 			double hasil;
 			if(!isdigit(input[i-1])){
-				while(input[i]!=')'){
+				while(input[i]!=')'&&i<strlen(input)){
 					if(isdigit(input[i]) || input[i]=='.'){
 						sudut[j++]=input[i];
 					} else{
 						trigono[x++]=input[i];
 					}
 					i++;
+				}
+				if(input[i]!=')'){
+					*valid=0;
 				}
 				sudut[j]='\0';
 				angka=strtod(sudut, NULL);
@@ -468,7 +471,7 @@ double kalkulasi(address P){
 		}else if(P->data=='^'){
 			return Perpangkatan(kalkulasi(P->left), kalkulasi(P->right));
 		}else if(P->data=='v'){
-			return akar_pangkat_n(kalkulasi(P->left), kalkulasi(P->right));
+			return akar_pangkat_n(kalkulasi(P->right), kalkulasi(P->left));
 		}
 	}
 	
@@ -524,9 +527,9 @@ double prosesPerhitunganTrigonometri(double angka, char operator[], int *valid){
 		return operasiCosinus(angka);
 	}else if(strcmp(operator,"tan(")==0 && angka!=90 && angka!=270){
 		return operasiTangen(angka);
-	}else if(strcmp(operator,"asin(")==0 && angka<-1 && angka>1){
+	}else if(strcmp(operator,"asin(")==0 && angka>=-1 && angka<=1){
 		return operasiAsin(angka);
-	}else if(strcmp(operator,"acos(")==0 && angka<-1 && angka>1){
+	}else if(strcmp(operator,"acos(")==0 && angka>=-1 && angka<=1){
 		return operasiAcos(angka);
 	}else if(strcmp(operator,"atan(")==0){
 		return operasiAtan(angka);

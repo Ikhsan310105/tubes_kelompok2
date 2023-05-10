@@ -7,7 +7,7 @@ CursorCol=23
 CursorRow=32
 =======
 Focused=1
-TopLine=12
+TopLine=33
 LeftChar=1
 [Editor_0]
 CursorCol=17
@@ -16,10 +16,10 @@ CursorRow=33
 TopLine=7
 LeftChar=1
 [Editor_1]
-CursorCol=14
+CursorCol=42
 <<<<<<< HEAD
-CursorRow=235
-TopLine=521
+CursorRow=270
+TopLine=269
 LeftChar=1
 [Editor_2]
 CursorCol=8
@@ -62,5 +62,5 @@ CursorRow=67
 CursorCol=24
 CursorRow=15
 >>>>>>> ikhsan
-TopLine=53
+TopLine=54
 LeftChar=1
