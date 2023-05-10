@@ -10,18 +10,16 @@ typedef char infotype;
 typedef struct Elemen *address;
 typedef struct Elemen{
 	infotype data;
-	float operand;
+	double operand;
 	address right;
 	address left;
-	int isOperator;
 }Tree;
 
 typedef struct Node *node;
 typedef struct Node{
 	node next;
 	infotype oprtr;
-	float operand;
-	int isoperator;
+	double operand;
 }ElmtList;
 
 typedef struct{
@@ -31,37 +29,46 @@ typedef struct{
 typedef struct {
 	node First;
 	node Last;
-//	int invalid;
 }Queue;
 
 
-void InfixToPostfix(infotype* input, infotype postfix[]);
 int derajatOperator(infotype oper);
 int isOperator(infotype oper);
-address CreateNode(infotype data);
-address BuildTree(infotype postfix[]);
 void PostOrder(address P);
 void ViewAsc(Queue First);
-void EnqueOperand(Queue *First,float item);
-void convertPostfix(Queue *Z,Stack *X,char *input,int *valid);
+void EnqueOperand(Queue *First, double item);
+void convertPostfix(Queue *Z,char *input,int *valid);
 void ViewAscStack(Stack First);
-void PushStack(Stack *First,char item, node *P);
+Stack PushStack(Stack First, char item);
 char PopStack(Stack *First);
 address Create_Tree(Queue Z);
-address CreateNodeOperand(float input);
+address CreateNodeOperand(double input);
 address CreateNodeOperator(char input);
 double kalkulasi(address P);
 float operasi_trigono(char* tes,float oprtr);
 float Perkalian(float bilangan1, float bilangan2);
 float akar_pangkat_n(int x,int n);
 float Perpangkatan(float bilangan, float pangkat);
-float DequeOperand(Queue *A);
-float faktorial(float n);
-double prosesPerhitunganTrigonometri(double angka, char operator[],int *valid);
+double DequeOperand(Queue *A);
+double faktorial(double n);
 node CreateNodeList();
-double processLogarithm(double angka,double base, char *operator,int *valid);
+double prosesPerhitunganTrigonometri(double angka, char operator[],int *valid);
 double naturalLogarithm(double number);
 double logarithm(double number, double base);
+double operasiPembagian(double bilangan1, double bilangan2);
+double operasiSinus(double sudut);
+double operasiCosinus(double sudut);
+double operasiTangen(double sudut);
+double operasiCosecan(double sudut);
+double operasiSecan(double sudut);
+double operasiCotangen(double sudut);
+double operasiAsin(double bilangan);
+double operasiAcos(double bilangan);
+double operasiAtan(double bilangan);
+void tampilkan_history();
+void insert_to_history(char *input);
+void help();
+void printTree(address root, int space);
 
 
 #endif

@@ -56,3 +56,60 @@ float Perpangkatan(float bilangan, float pangkat){
 	}
  	
  }
+ 
+ 
+  void insert_to_history(char *input){
+ 	FILE *file;
+ 	if((file = fopen ("History.txt","a"))==NULL){
+ 		printf("file yang dimasukkan tidak ada");
+		fclose(file);
+	}else{
+		fputs(input,file);
+		fclose(file);
+	}
+	
+ }
+ 
+ void tampilkan_history(){
+ 	FILE *file;
+ 	char buff[255];
+ 	if((file =fopen("History.txt","r"))==NULL){
+ 		printf("FIlE tidak ada");
+ 		fclose(file);
+	 }
+ 	  while(fgets(buff, sizeof(buff), file)){
+        printf("%s", buff);
+    }
+    fclose(file);
+ }
+ 
+ void help(){
+ 	printf("\t\t\t Aturan Kalkulator\n");
+ 	printf("1 TrigonoMetri: pada penggunaan trigono metri digunakan format sebagai berikut:(simbol trigonometri)(angka)\n");
+	printf("Misal: sin(90) atau 90sin(30)\n");
+	printf("2 Logaritma: pada penggunaan operasi logaritma dan logaritma natural digunakan format sebagai berikut: (basis bebas)log(angka) dan ln(angka) atau tanpa basis bebas sekalipun\n");
+	printf("Misal: log(100) atau 2log(8) dan ln(1) atau 2ln(1) dsb\n");
+	printf("3. Akar: pada penggunaan operasi akar disini digunaka format sebagai berikut: (pangkat akar)v(angka)\n");
+	printf("Misal: 2v4 atau 3v8\n");
+	
+}
+
+
+ void printTree(address root, int space) {
+    if (root == NULL) {
+        return;
+    }
+    int i;
+    space += 5;
+    printTree(root->right, space);
+    printf("\n");
+    for (i = 5; i < space; i++) {
+        printf(" ");
+    }
+    if(root->data!='\0'){
+    printf("%c\n", root->data);
+	}else{
+		printf("%.2f",root->operand);
+	}
+    printTree(root->left, space);
+}

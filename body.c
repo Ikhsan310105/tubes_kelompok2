@@ -5,53 +5,6 @@
 #include <ctype.h>
 
 #include "header.h"
-#include "dinda.h"
-
-void InfixToPostfix(infotype* input, infotype postfix[]){
-	infotype stack[50], c;
-	int i, length,top=-1, x=0,oper1, oper2;
-	
-	length=strlen(input);
-	printf("length: %d \n", length);
-	printf("input: %s \n", input);
-	
-	for(i=0;i<length;i++){
-		c=input[i];
-		if(isdigit(c)){
-//			char num[length];
-//			int j=0;
-//			while(isdigit(input[i] || input[i]=='.')){
-//				num[j++]=input[i];
-//				i++;
-//			}
-//			i--;
-//			postfix[x++]=num;
-			postfix[x++]=c;
-		} else{
-			if(isOperator(c) && top!=-1 && stack[top]!='('){
-//				printf("\noper: %c", c);
-//				printf("\ntop: %c", stack[top]);
-				oper1=derajatOperator(c);
-				oper2=derajatOperator(stack[top]);
-				while(oper1<=oper2 && top!=-1 ){
-					postfix[x++]=stack[top--];
-				}
-				stack[++top]=c;
-			} else if(c==')'){
-//				printf("\noper: %c", c);
-				postfix[x++]=stack[top--];
-				top--;	
-			} else{
-				stack[++top]=c;
-			}
-		}
-		
-	}
-	while(top!=-1){
-		postfix[x++]=stack[top--];
-	}
-	postfix[x] = '\0';
-}
 
 int derajatOperator(infotype oper){
 	if(oper=='+' || oper=='-'){
@@ -67,43 +20,10 @@ int derajatOperator(infotype oper){
 }
 
 int isOperator(infotype oper){
-	if(oper=='+' || oper=='-' || oper=='*' || oper=='/' || oper=='^' || oper=='v'){
+	if(oper=='+' || oper=='-' || oper=='*' || oper=='/' || oper=='^'||oper=='v'){
 		return 1;
 	} 
 	return 0;
-}
-
-address CreateNode(infotype data){
-	address P;
-	
-	P = (address) malloc (sizeof (Tree));
-	Data(P)=data;
-	right(P)=Nil;
-	left(P)=Nil;
-	
-	return P;
-}
-
-address BuildTree(infotype postfix[]){
-	address P;
-	address stack[50];
-	int i, len, top=-1;
-	infotype c;
-	
-	len=strlen(postfix);
-	
-	for(i=0;i<len;i++){
-		c=postfix[i];
-		if(isdigit(c)){
-			P=CreateNode(c);
-		} else{
-			P=CreateNode(c);
-			right(P)=stack[top--];
-			left(P)=stack[top--];
-		}
-		stack[++top]=P;
-	}
-	return(stack[0]);
 }
 
 void PostOrder(address P){
@@ -111,7 +31,7 @@ void PostOrder(address P){
 	if(P!=Nil){
 		PostOrder(left(P));
 		PostOrder(right(P));
-		if(P->isOperator==1){
+		if(P->data!='\0'){
 			printf("%c ", P->data);
 		}else{
 			printf("%g ",P->operand);
@@ -119,24 +39,24 @@ void PostOrder(address P){
 	}
 }
 
-void PushStack(Stack *First, char item, node *P){
-	*P = (node) malloc (sizeof (ElmtList));
+ Stack PushStack(Stack First, char item){
+	node P;
+	P = (node) malloc (sizeof (ElmtList));
 	if(P==NULL){
 		printf("Gagal Alokasi");
 	}else{
 
-		(*P)->oprtr=item;
-		(*P)->isoperator=1;
-		(*P)->next=NULL;
-		if(First->Head==NULL){
-			(*First).Head=*P;
-			(*First).Head->next=NULL;	
+		P->oprtr=item;
+		P->next=NULL;
+		if(First.Head==NULL){
+			First.Head=P;
+			First.Head->next=NULL;	
 		}else{
-			(*P)->next=First->Head;
-			First->Head=*P;
+			P->next=First.Head;
+			First.Head=P;
 		}
 	
-	
+	return First;
 	}
 }
 
@@ -154,14 +74,14 @@ void ViewAsc(Queue First){
 	P=First.First;
 	if(P!=NULL){
 		
-	while(P!=NULL){
-		if(P->isoperator==1){
-			printf("%c ",P->oprtr);
-		}else{
-			printf("%g ",P->operand);
+		while(P!=NULL){
+			if(P->oprtr!='\0'){
+				printf("%c ",P->oprtr);
+			}else{
+				printf("%g ",P->operand);
+			}
+		P=P->next;
 		}
-	P=P->next;
-	}
 	}
 	else if(P==NULL){
 		printf("list kosong");
@@ -174,7 +94,7 @@ void ViewAscStack(Stack First){
 	if(P!=NULL){
 		
 		while(P!=NULL){
-			if(P->isoperator==1){
+			if(P->oprtr!='\0'){
 				printf("%c ",P->oprtr);
 			}else{
 				printf("%g ",P->operand);
@@ -195,13 +115,13 @@ node CreateNodeList(){
 		printf("Gagal Alokasi");
 	}else{
 		(P)->next=NULL;
-		(P)->isoperator=1;
+		(P)->oprtr='\0';
 	} 
 	
 	return P;
 }
 
-void EnqueOperator(Queue *Q,char item){
+void EnqueOperator(Queue *Q, char item){
 	node P;
 	
 	P=CreateNodeList();
@@ -217,12 +137,11 @@ void EnqueOperator(Queue *Q,char item){
 	}
 }
 
-void EnqueOperand(Queue *Q,float item){
+void EnqueOperand(Queue *Q, double item){
 	node P;
 	
 	P=CreateNodeList();
 	P->operand=item;
-	P->isoperator=0;
 	if(Q->First==NULL){
 		Q->First=P;
 		Q->Last=P;
@@ -233,15 +152,18 @@ void EnqueOperand(Queue *Q,float item){
 		Q->Last=P;
 	}
 }
-//float kalkulasi()
-void convertPostfix(Queue *Z,Stack *X,char *input,int *valid){
+
+void convertPostfix(Queue *Z, char *input, int *valid){
 	node P;
-	char token,c,negatif;
+	Stack X;
+	char token, c, negatif;
 	int num3=10;
 	int i,temp;
-	float num=0,num2;
-	float angka;
+	double num=0,num2;
+	double angka;
 	int j;
+	
+	X.Head=NULL;
 	for(i=0;i<strlen(input);i++){
 		token=input[i];
 		if(isdigit(token)||token=='.'||(token=='-'&&(isOperator(input[i-1])||i==0||input[i-1]=='('))){
@@ -273,9 +195,10 @@ void convertPostfix(Queue *Z,Stack *X,char *input,int *valid){
 			char sudut[20];
 			int x=0;
 			j=0;
-			float hasil,f;
+			float f;
+			double hasil;
 			if(!isdigit(input[i-1])){
-				while(input[i]!=')'){
+				while(input[i]!=')'&&i<strlen(input)){
 					if(isdigit(input[i]) || input[i]=='.'){
 						sudut[j++]=input[i];
 					} else{
@@ -283,8 +206,11 @@ void convertPostfix(Queue *Z,Stack *X,char *input,int *valid){
 					}
 					i++;
 				}
+				if(input[i]!=')'){
+					*valid=0;
+				}
 				sudut[j]='\0';
-				angka=strtof(sudut, NULL);
+				angka=strtod(sudut, NULL);
 				hasil=prosesPerhitunganTrigonometri(angka,trigono,&*valid);
 				EnqueOperand(&*Z, hasil);	
 			}else{
@@ -298,24 +224,25 @@ void convertPostfix(Queue *Z,Stack *X,char *input,int *valid){
 					i++;
 				}
 				sudut[j]='\0';
-				angka=strtof(sudut, NULL);
-				hasil=f*prosesPerhitunganTrigonometri(angka,trigono,&*valid);
+				angka=strtod(sudut, NULL);
+				hasil=prosesPerhitunganTrigonometri(angka,trigono,&*valid);
+				hasil*=f;
 				EnqueOperand(&*Z, hasil);
 			}
-		}else if(isOperator(token)&&X->Head!=NULL&&X->Head->oprtr!='('){
-			c=X->Head->oprtr;
-			while(derajatOperator(token)<=derajatOperator(c)&&X->Head!=NULL&&X->Head->oprtr!='('){
-				EnqueOperator(&*Z,PopStack(&*X));
+		}else if(isOperator(token)&&X.Head!=NULL&&X.Head->oprtr!='('&&isdigit(input[i-1])){
+			c=X.Head->oprtr;
+			while(derajatOperator(token)<=derajatOperator(c)&&X.Head!=NULL&&X.Head->oprtr!='('){
+				EnqueOperator(&*Z,PopStack(&X));
 			}
-			PushStack(&*X,token, &P);
+			X=PushStack(X,token);
 		}else if(token==')'){
-			c=X->Head->oprtr;
-			while(c!='('&&X->Head->next!=NULL){
-				EnqueOperator(&*Z,PopStack(&*X));
-				c=X->Head->oprtr;
+			c=X.Head->oprtr;
+			while(c!='('&&X.Head->next!=NULL){
+				EnqueOperator(&*Z,PopStack(&X));
+				c=X.Head->oprtr;
 			}
 			if(c=='('){
-				PopStack(&*X);
+				PopStack(&X);
 			}else{
 				printf("format yang dimasukkan salah\n");
 				break;
@@ -325,7 +252,7 @@ void convertPostfix(Queue *Z,Stack *X,char *input,int *valid){
 			int x=0;
 			j=0;
 			double hasil;
-			float f,o;
+			double f,o;
 			if(isdigit(input[i-1])){
 				o=DequeOperand(&*Z);
 				if((input[i+1]=='o')&&(input[i+2]=='g')&&(input[i+3]=='(')){
@@ -370,7 +297,7 @@ void convertPostfix(Queue *Z,Stack *X,char *input,int *valid){
 					if(input[i]==')'){
 						angka=strtof(num, NULL);
 						if(angka==0){
-							*valid=3;
+							*valid=0;
 						}else{
 							hasil=naturalLogarithm(angka);
 							EnqueOperand(&*Z, hasil);
@@ -383,9 +310,9 @@ void convertPostfix(Queue *Z,Stack *X,char *input,int *valid){
 				}
 			}
 		}else if(token=='('){
-			PushStack(&*X,token, &P);
+			X=PushStack(X,token);
 		}else if(token=='!'){
-			float a,c;
+			double a,c;
 			char t;
 			t=token;
 			if(isdigit(input[i-1])){
@@ -395,15 +322,28 @@ void convertPostfix(Queue *Z,Stack *X,char *input,int *valid){
 				
 			}else{
 				printf("\t\t\tformat yang anda masukkan salah: ");
-//				Z->invalid=1;
 			}
+		}else if(token=='v'&&!isdigit(input[i-1])){
+			i++;
+			float hasilakarkuadrat=0;
+			int plus=0;
+			char num[20];
+			float num1;
+			while(isdigit(input[i])||input[i]=='.'){
+				num[plus++]=input[i];
+				i++;
+			}
+			num1=strtof(num,NULL);
+			hasilakarkuadrat=akar_pangkat_n(num1,2);
+			EnqueOperand(&*Z,hasilakarkuadrat);
+			
 		}
 		else{
-			PushStack(&*X,token, &P);
+			X=PushStack(X,token);
 		}
 	}
-	while(X->Head!=NULL){
-		c=PopStack(&*X);
+	while(X.Head!=NULL){
+		c=PopStack(&X);
 		EnqueOperator(&*Z,c);
 	}
 	
@@ -417,12 +357,12 @@ address Create_Tree(Queue Z){
 	node Q;
 	int i, len, top=-1;
 	infotype c;
-	float d;
+	double d;
 	
 	Q=Z.First;
 	
 	while(Q!=NULL){
-		if(Q->isoperator==1){
+		if(Q->oprtr!='\0'){
 			c=Q->oprtr;
 			P=CreateNodeOperator(c);
 			right(P)=stack[top--];
@@ -431,24 +371,17 @@ address Create_Tree(Queue Z){
 			d=Q->operand;
 			P=CreateNodeOperand(d);
 		}
-//		if(isdigit(c)){
-//			P=CreateNode(c);
-//		} else{
-//			P=CreateNode(c);
-//			right(P)=stack[top--];
-//			left(P)=stack[top--];
-//		}
 		stack[++top]=P;
 		Q=Q->next;
 	}
 	return(stack[0]);
 }
 
-address CreateNodeOperand(float input){
+address CreateNodeOperand(double input){
 	address P;
 	P = (address) malloc (sizeof (Tree));
 	P->operand=input;
-	P->isOperator=0;
+	P->data='\0';
 	P->left=NULL;
 	P->right=NULL;
 	return P;
@@ -459,7 +392,6 @@ address CreateNodeOperator(char input){
 	address P;
 	P = (address) malloc (sizeof (Tree));
 	P->data=input;
-	P->isOperator=1;
 	P->left=NULL;
 	P->right=NULL;
 	return P;
@@ -467,7 +399,7 @@ address CreateNodeOperator(char input){
 }
 
 double kalkulasi(address P){
-	if(P->isOperator==1){
+	if(P->data!='\0'){
 		if(P->data=='+'){
 			return kalkulasi(P->left) + kalkulasi(P->right);
 		}else if(P->data=='-'){
@@ -481,15 +413,15 @@ double kalkulasi(address P){
 		}else if(P->data=='^'){
 			return Perpangkatan(kalkulasi(P->left), kalkulasi(P->right));
 		}else if(P->data=='v'){
-			return akar_pangkat_n(kalkulasi(P->left), kalkulasi(P->right));
+			return akar_pangkat_n(kalkulasi(P->right), kalkulasi(P->left));
 		}
 	}
 	
 	return P->operand;
 }
 
-float DequeOperand(Queue *A){
-	float q;
+double DequeOperand(Queue *A){
+	double q;
 	node First,Last,Throw;
 	First=A->First;
 	Last=A->Last;
@@ -519,8 +451,8 @@ float DequeOperand(Queue *A){
 }
 
 
-float faktorial(float n){
-	float hasil=1;
+double faktorial(double n){
+	double hasil=1;
 	int i=1;
 	
 	while(i<=n){
@@ -530,24 +462,24 @@ float faktorial(float n){
 	return hasil;
 }
 
-double prosesPerhitunganTrigonometri(double angka, char operator[],int *valid){
+double prosesPerhitunganTrigonometri(double angka, char operator[], int *valid){
 	if(strcmp(operator,"sin(")==0){
 		return operasiSinus(angka);
-	}else if(strcmp(operator,"cos(")==0){
+	}else if(strcmp(operator,"cos(")==0 ){
 		return operasiCosinus(angka);
-	}else if(strcmp(operator,"tan(")==0){
+	}else if(strcmp(operator,"tan(")==0 && angka!=90 && angka!=270){
 		return operasiTangen(angka);
-	}else if(strcmp(operator,"asin(")==0){
+	}else if(strcmp(operator,"asin(")==0 && angka>=-1 && angka<=1){
 		return operasiAsin(angka);
-	}else if(strcmp(operator,"acos(")==0){
+	}else if(strcmp(operator,"acos(")==0 && angka>=-1 && angka<=1){
 		return operasiAcos(angka);
 	}else if(strcmp(operator,"atan(")==0){
 		return operasiAtan(angka);
-	}else if(strcmp(operator,"csc(")==0){
+	}else if(strcmp(operator,"csc(")==0 && angka!=0 && angka!=180 && angka!=360 ){
 		return operasiCosecan(angka);
-	}else if(strcmp(operator,"sec(")==0){
+	}else if(strcmp(operator,"sec(")==0 && angka!=90 && angka!=270){
 		return operasiSecan(angka);
-	}else if(strcmp(operator,"cot(")==0){
+	}else if(strcmp(operator,"cot(")==0 && angka!=0 && angka!=180 && angka!=360){
 		return operasiCotangen(angka);
 	}else{
         *valid=0;
