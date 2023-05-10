@@ -62,13 +62,13 @@ int main(int argc, char *argv[]) {
 			while(lagi=='H'||lagi=='h'){
 				system ("cls");
 				tampilkan_history();
-				printf("\n Lakukan Operasi Lagi?(y/n/h/l)\ny:lakukan lagi\n:berhenti dan keluar\nH:masuk ke histori kalkulator\nL:List aturan aritmatika\nPilihan Anda:");
+				printf("\nLakukan Operasi Lagi?(y/n/h/l)\ny:lakukan lagi\nn:berhenti dan keluar\nH:masuk ke histori kalkulator\nL:List aturan aritmatika\nPilihan Anda:");
 				scanf("%c", &lagi);fflush(stdin);
 			}
 			while(lagi=='l'||lagi=='L'){
 				system ("cls");
 				help();
-				printf("\n Lakukan Operasi Lagi?(y/n/h/l)\ny:lakukan lagi\n:berhenti dan keluar\nH:masuk ke histori kalkulator\nL:List aturan aritmatika\nPilihan Anda:");
+				printf("\nLakukan Operasi Lagi?(y/n/h/l)\ny:lakukan lagi\nn:berhenti dan keluar\nH:masuk ke histori kalkulator\nL:List aturan aritmatika\nPilihan Anda:");
 				scanf("%c", &lagi);fflush(stdin);
 			}
 		}
