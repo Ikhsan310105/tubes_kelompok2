@@ -9,22 +9,19 @@ int main(int argc, char *argv[]) {
 	char input[30],temp;
 	char lagi;
 	int valid;
-	Stack S;
 	Queue Z;
-	node Q;
+	
 	do{
 		system("cls");
 		address P;
 		valid=1;
 		Z.First=NULL;
 		Z.Last=NULL;
-//		Z.invalid=0;
-		S.Head=NULL;
 		menu();
 		printf("\n\t\t\tenter expression:");
 		scanf("%s",&input);
 		fflush(stdin);
-		convertPostfix(&Z,&S,input,&valid);
+		convertPostfix(&Z,input,&valid);
 		if(valid==1){
 			P=Create_Tree(Z);
 			hasil=kalkulasi(P);
@@ -44,9 +41,4 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
-//	temp=PopStack(&X);
-//	ViewAsc(Z);
-//	ViewAscStack(X);
-//	printf("input: %s", input);
-//	InfixToPostfix("1*(2+3)/4^5-6", postfix);
-//	printf("postfix: %s", postfix);
+

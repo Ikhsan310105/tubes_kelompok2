@@ -100,8 +100,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit6]
-FileName=dinda.h
+[Unit7]
+FileName=dinda.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -110,7 +110,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit7]
+[Unit8]
+FileName=dinda.c
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit6]
 FileName=ikhsan.c
 CompileCpp=0
 Folder=

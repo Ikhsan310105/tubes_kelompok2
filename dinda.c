@@ -1,42 +1,41 @@
-#ifndef operasi_h
-#define operasi_h
 #include <stdio.h>
 #define PI 3.14159265358979323846
 #define SUDUT 180.0
 #include <math.h>
+#include "header.h"
 
 
 double operasiPembagian(double bilangan1, double bilangan2){
 	return bilangan1/bilangan2;
 }
 
-float operasiSinus(float sudut){
-	float rad=sudut*(PI/180);
+double operasiSinus(double sudut){
+	double rad=sudut*(PI/180);
 	
 	return sin(rad);
 }
 
-float operasiCosinus(float sudut){
-	float rad=sudut*(PI/180);
+double operasiCosinus(double sudut){
+	double rad=sudut*(PI/180);
 	
 	return cos(rad);
 }
 
-float operasiTangen(float sudut){
-	float rad=sudut*(PI/180);
+double operasiTangen(double sudut){
+	double rad=sudut*(PI/180);
 	
 	return tan(rad);
 }
 
-float operasiCosecan(float sudut){
+double operasiCosecan(double sudut){
 	return 1/operasiSinus(sudut);
 }
 
-float operasiSecan(float sudut){
+double operasiSecan(double sudut){
 	return 1/operasiCosinus(sudut);
 }
 
-float operasiCotangen(float sudut){
+double operasiCotangen(double sudut){
 	return 1/operasiTangen(sudut);
 }
 
@@ -70,7 +69,7 @@ double operasiAtan(double bilangan) {
     return atan(bilangan) * SUDUT/ PI;
 }
 
-#endif
+
 
 
 
