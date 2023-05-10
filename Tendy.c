@@ -56,3 +56,30 @@ float Perpangkatan(float bilangan, float pangkat){
 	}
  	
  }
+ 
+ 
+  void insert_to_history(char *input){
+ 	FILE *file;
+ 	if((file = fopen ("History.txt","a"))==NULL){
+ 		printf("file yang dimasukkan tidak ada");
+		fclose(file);
+	}else{
+		fputs(input,file);
+		fclose(file);
+	}
+	
+ }
+ 
+ void tampilkan_history(){
+ 	FILE *file;
+ 	char buff[255];
+ 	if((file =fopen("History.txt","r"))==NULL){
+ 		printf("FIlE tidak ada");
+ 		fclose(file);
+	 }
+ 	  while(fgets(buff, sizeof(buff), file)){
+        printf("%s", buff);
+    }
+    fclose(file);
+ }
+ 

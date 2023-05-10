@@ -6,27 +6,50 @@
 
 int main(int argc, char *argv[]) {
 	float hasil;
-	char input[30],temp;
-	address P;
-	Stack S;
+	char input[30],temp,temp1[20];
+	char lagi;
+	int valid;
 	Queue Z;
-	node Q;
-	Z.First=NULL;
-	Z.Last=NULL;
-	S.Head=NULL;
-	printf("enter expression:");
-	scanf("%s",&input);fflush(stdin);
-	convertPostfix(&Z,&S,input);
-//	temp=PopStack(&X);
-//	ViewAsc(Z);
-//	ViewAscStack(X);
-//	printf("input: %s", input);
-//	InfixToPostfix("1*(2+3)/4^5-6", postfix);
-//	printf("postfix: %s", postfix);
-	P=Create_Tree(Z);
-	hasil=kalkulasi(P);
-	printf("hasilnya adalah %g\n",hasil);
-	printf("PostOrder: ");
-	PostOrder(P);
+	
+	do{
+		system("cls");
+		address P;
+		valid=1;
+		Z.First=NULL;
+		Z.Last=NULL;
+		menu();
+		printf("\n\t\t\tenter expression:");
+		scanf("%s",&input);
+		fflush(stdin);
+		convertPostfix(&Z,input,&valid);
+		if(valid==1){
+			insert_to_history(input);
+			P=Create_Tree(Z);
+			hasil=kalkulasi(P);
+			gcvt(hasil,20,temp1);
+			insert_to_history("=");
+			insert_to_history(temp1);
+			insert_to_history("\n");
+			insert_to_history("--------------------------------------------------------------------");
+			insert_to_history("\n");
+			printf("\n\t\t\thasilnya adalah %.2f\n",hasil);
+			printf("\t\t\tPostOrder: ");
+			PostOrder(P);
+		}else{
+			printf("\t\t\tMATH ERROR");
+		}
+		fflush(stdin);
+		printf("\n\t\t\tLagi?(y/n/h)");
+		scanf("%c", &lagi);fflush(stdin);
+			while(lagi=='h'){
+			system ("cls");
+			tampilkan_history();
+			printf("\n Lakukan Operasi Lagi?(y/n/h)");
+			scanf("%c", &lagi);fflush(stdin);
+		}
+	}while(lagi=='y');
+	
 	return 0;
 }
+
+
