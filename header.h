@@ -10,7 +10,7 @@ typedef char infotype;
 typedef struct Elemen *address;
 typedef struct Elemen{
 	infotype data;
-	float operand;
+	double operand;
 	address right;
 	address left;
 //	int isOperator;

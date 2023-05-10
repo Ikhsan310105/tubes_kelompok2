@@ -28,10 +28,8 @@ int main(int argc, char *argv[]) {
 			printf("\n\t\t\thasilnya adalah %.2f\n",hasil);
 			printf("\t\t\tPostOrder: ");
 			PostOrder(P);
-		}else if(valid==3){
-			printf("\t\t\tln(0)=Tidak Terdefinisi");
 		}else{
-			printf("\t\t\tInvalid Operator");
+			printf("\t\t\tMATH ERROR");
 		}
 		fflush(stdin);
 		printf("\n\t\t\tLagi?(y/n)");

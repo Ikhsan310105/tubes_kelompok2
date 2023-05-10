@@ -233,7 +233,6 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 	int j;
 	
 	X.Head=NULL;
-	printf("Input: %s \n", input);
 	for(i=0;i<strlen(input);i++){
 		token=input[i];
 		if(isdigit(token)||token=='.'||(token=='-'&&(isOperator(input[i-1])||i==0||input[i-1]=='('))){
@@ -366,7 +365,7 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 					if(input[i]==')'){
 						angka=strtof(num, NULL);
 						if(angka==0){
-							*valid=3;
+							*valid=0;
 						}else{
 							hasil=naturalLogarithm(angka);
 							EnqueOperand(&*Z, hasil);
@@ -521,21 +520,21 @@ double faktorial(double n){
 double prosesPerhitunganTrigonometri(double angka, char operator[], int *valid){
 	if(strcmp(operator,"sin(")==0){
 		return operasiSinus(angka);
-	}else if(strcmp(operator,"cos(")==0){
+	}else if(strcmp(operator,"cos(")==0 ){
 		return operasiCosinus(angka);
-	}else if(strcmp(operator,"tan(")==0){
+	}else if(strcmp(operator,"tan(")==0 && angka!=90 && angka!=270){
 		return operasiTangen(angka);
-	}else if(strcmp(operator,"asin(")==0){
+	}else if(strcmp(operator,"asin(")==0 && angka<-1 && angka>1){
 		return operasiAsin(angka);
-	}else if(strcmp(operator,"acos(")==0){
+	}else if(strcmp(operator,"acos(")==0 && angka<-1 && angka>1){
 		return operasiAcos(angka);
 	}else if(strcmp(operator,"atan(")==0){
 		return operasiAtan(angka);
-	}else if(strcmp(operator,"csc(")==0){
+	}else if(strcmp(operator,"csc(")==0 && angka!=0 && angka!=180 && angka!=360 ){
 		return operasiCosecan(angka);
-	}else if(strcmp(operator,"sec(")==0){
+	}else if(strcmp(operator,"sec(")==0 && angka!=90 && angka!=270){
 		return operasiSecan(angka);
-	}else if(strcmp(operator,"cot(")==0){
+	}else if(strcmp(operator,"cot(")==0 && angka!=0 && angka!=180 && angka!=360){
 		return operasiCotangen(angka);
 	}else{
         *valid=0;

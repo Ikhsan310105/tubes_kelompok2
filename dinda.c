@@ -64,6 +64,7 @@ double operasiAcos(double bilangan) {
     }
     
 }
+
 //fungsi operasi Atan
 double operasiAtan(double bilangan) {
     return atan(bilangan) * SUDUT/ PI;
