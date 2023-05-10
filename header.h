@@ -43,7 +43,7 @@ void ViewAsc(Queue First);
 void EnqueOperand(Queue *First, double item);
 void convertPostfix(Queue *Z,char *input,int *valid);
 void ViewAscStack(Stack First);
-void PushStack(Stack *First,char item, node *P);
+Stack PushStack(Stack First, char item);
 char PopStack(Stack *First);
 address Create_Tree(Queue Z);
 address CreateNodeOperand(double input);
@@ -73,6 +73,8 @@ double operasiAsin(double bilangan);
 double operasiAcos(double bilangan);
 double operasiAtan(double bilangan);
 void tampilkan_history();
+void insert_to_history(char *input);
+void help();
 
 
 #endif

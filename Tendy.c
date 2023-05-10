@@ -83,3 +83,13 @@ float Perpangkatan(float bilangan, float pangkat){
     fclose(file);
  }
  
+ void help(){
+ 	printf("\t\t\t Aturan Kalkulator\n");
+ 	printf("1 TrigonoMetri: pada penggunaan trigono metri digunakan format sebagai berikut:(simbol trigonometri)(angka)\n");
+	printf("Misal: sin(90) atau 90sin(30)\n");
+	printf("2 Logaritma: pada penggunaan operasi logaritma digunakan format sebagai berikut: (basis bebas)log(angka) atau tanpa basis bebas sekalipun\n");
+	printf("Misal: log(100) atau 2log(8) dsb\n");
+	printf("3. Akar: pada penggunaan operasi akar disini digunaka format sebagai berikut: (pangkat akar)v(angka)\n");
+	printf("Misal: 2v4 atau 3v8\n");
+	
+}

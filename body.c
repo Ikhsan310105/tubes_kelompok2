@@ -66,7 +66,7 @@ int derajatOperator(infotype oper){
 }
 
 int isOperator(infotype oper){
-	if(oper=='+' || oper=='-' || oper=='*' || oper=='/' || oper=='^' || oper=='v'){
+	if(oper=='+' || oper=='-' || oper=='*' || oper=='/' || oper=='^'||oper=='v'){
 		return 1;
 	} 
 	return 0;
@@ -109,23 +109,24 @@ void PostOrder(address P){
 	}
 }
 
-void PushStack(Stack *First, char item, node *P){
-	*P = (node) malloc (sizeof (ElmtList));
+ Stack PushStack(Stack First, char item){
+	node P;
+	P = (node) malloc (sizeof (ElmtList));
 	if(P==NULL){
 		printf("Gagal Alokasi");
 	}else{
 
-		(*P)->oprtr=item;
-		(*P)->next=NULL;
-		if(First->Head==NULL){
-			(*First).Head=*P;
-			(*First).Head->next=NULL;	
+		P->oprtr=item;
+		P->next=NULL;
+		if(First.Head==NULL){
+			First.Head=P;
+			First.Head->next=NULL;	
 		}else{
-			(*P)->next=First->Head;
-			First->Head=*P;
+			P->next=First.Head;
+			First.Head=P;
 		}
 	
-	
+	return First;
 	}
 }
 
@@ -300,12 +301,12 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 				hasil*=f;
 				EnqueOperand(&*Z, hasil);
 			}
-		}else if(isOperator(token)&&X.Head!=NULL&&X.Head->oprtr!='('){
+		}else if(isOperator(token)&&X.Head!=NULL&&X.Head->oprtr!='('&&isdigit(input[i-1])){
 			c=X.Head->oprtr;
 			while(derajatOperator(token)<=derajatOperator(c)&&X.Head!=NULL&&X.Head->oprtr!='('){
 				EnqueOperator(&*Z,PopStack(&X));
 			}
-			PushStack(&X,token, &P);
+			X=PushStack(X,token);
 		}else if(token==')'){
 			c=X.Head->oprtr;
 			while(c!='('&&X.Head->next!=NULL){
@@ -381,7 +382,7 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 				}
 			}
 		}else if(token=='('){
-			PushStack(&X,token, &P);
+			X=PushStack(X,token);
 		}else if(token=='!'){
 			double a,c;
 			char t;
@@ -395,9 +396,23 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 				printf("\t\t\tformat yang anda masukkan salah: ");
 //				Z->invalid=1;
 			}
+		}else if(token=='v'&&!isdigit(input[i-1])){
+			i++;
+			float hasilakarkuadrat=0;
+			int plus=0;
+			char num[20];
+			float num1;
+			while(isdigit(input[i])||input[i]=='.'){
+				num[plus++]=input[i];
+				i++;
+			}
+			num1=strtof(num,NULL);
+			hasilakarkuadrat=akar_pangkat_n(num1,2);
+			EnqueOperand(&*Z,hasilakarkuadrat);
+			
 		}
 		else{
-			PushStack(&X,token, &P);
+			X=PushStack(X,token);
 		}
 	}
 	while(X.Head!=NULL){

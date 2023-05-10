@@ -39,12 +39,18 @@ int main(int argc, char *argv[]) {
 			printf("\t\t\tMATH ERROR");
 		}
 		fflush(stdin);
-		printf("\n\t\t\tLagi?(y/n/h)");
+		printf("\n Lakukan Operasi Lagi?(y/n/h/l)\ny:lakukan lagi\nn:berhenti dan keluar\nh:masuk ke histori kalkulator\nl:List aturan aritmatika\nPilihan Anda:");
 		scanf("%c", &lagi);fflush(stdin);
 			while(lagi=='h'){
 			system ("cls");
 			tampilkan_history();
-			printf("\n Lakukan Operasi Lagi?(y/n/h)");
+			printf("\n Lakukan Operasi Lagi?(y/n/h/l)\ny:lakukan lagi\n:berhenti dan keluar\nh:masuk ke histori kalkulator\nl:List aturan aritmatika\nPilihan Anda:");
+			scanf("%c", &lagi);fflush(stdin);
+		}
+		while(lagi=='l'){
+			system ("cls");
+			help();
+			printf("\n Lakukan Operasi Lagi?(y/n/h/l)\ny:lakukan lagi\n:berhenti dan keluar\nh:masuk ke histori kalkulator\nl:List aturan aritmatika\nPilihan Anda:");
 			scanf("%c", &lagi);fflush(stdin);
 		}
 	}while(lagi=='y');
