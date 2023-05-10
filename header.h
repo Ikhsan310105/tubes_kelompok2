@@ -75,6 +75,7 @@ double operasiAtan(double bilangan);
 void tampilkan_history();
 void insert_to_history(char *input);
 void help();
+void printTree(address root, int space);
 
 
 #endif

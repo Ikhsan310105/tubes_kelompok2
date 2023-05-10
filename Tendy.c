@@ -93,3 +93,23 @@ float Perpangkatan(float bilangan, float pangkat){
 	printf("Misal: 2v4 atau 3v8\n");
 	
 }
+
+
+ void printTree(address root, int space) {
+    if (root == NULL) {
+        return;
+    }
+    int i;
+    space += 5;
+    printTree(root->right, space);
+    printf("\n");
+    for (i = 5; i < space; i++) {
+        printf(" ");
+    }
+    if(root->data!='\0'){
+    printf("%c\n", root->data);
+	}else{
+		printf("%.2f",root->operand);
+	}
+    printTree(root->left, space);
+}

@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
 		if(valid==1){
 			insert_to_history(input);
 			P=Create_Tree(Z);
+			printTree(P,0);
 			hasil=kalkulasi(P);
 			gcvt(hasil,20,temp1);
 			insert_to_history("=");
