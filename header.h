@@ -3,6 +3,7 @@
 #define Data(P) (P)->data
 #define right(P) (P)->right
 #define left(P) (P)->left
+#include <stdbool.h>
 #define Nil NULL
 #include <ctype.h>
 
@@ -52,7 +53,7 @@ float Perpangkatan(float bilangan, float pangkat);
 double DequeOperand(Queue *A);
 double faktorial(double n);
 node CreateNodeList();
-double prosesPerhitunganTrigonometri(double angka, char operator[],bool *valid);
+double prosesPerhitunganTrigonometri(double angka, char operator[], bool *valid);
 double naturalLogarithm(double number);
 double logarithm(double number, double base);
 double operasiPembagian(double bilangan1, double bilangan2);
