@@ -51,8 +51,6 @@ double operasiAsin(double bilangan){
     }
 }
 
-
-//fungsi operasi Acos
 double operasiAcos(double bilangan) {
 	if(bilangan>1 || bilangan<-1)
     {

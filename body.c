@@ -6,96 +6,6 @@
 
 #include "header.h"
 
-//void InfixToPostfix(infotype* input, infotype postfix[]){
-//	infotype stack[50], c;
-//	int i, length,top=-1, x=0,oper1, oper2;
-//	
-//	length=strlen(input);
-//	printf("length: %d \n", length);
-//	printf("input: %s \n", input);
-//	
-//	for(i=0;i<length;i++){
-//		c=input[i];
-//		if(isdigit(c)){
-////			char num[length];
-////			int j=0;
-////			while(isdigit(input[i] || input[i]=='.')){
-////				num[j++]=input[i];
-////				i++;
-////			}
-////			i--;
-////			postfix[x++]=num;
-//			postfix[x++]=c;
-//		} else{
-//			if(isOperator(c) && top!=-1 && stack[top]!='('){
-////				printf("\noper: %c", c);
-////				printf("\ntop: %c", stack[top]);
-//				oper1=derajatOperator(c);
-//				oper2=derajatOperator(stack[top]);
-//				while(oper1<=oper2 && top!=-1 ){
-//					postfix[x++]=stack[top--];
-//				}
-//				stack[++top]=c;
-//			} else if(c==')'){
-////				printf("\noper: %c", c);
-//				postfix[x++]=stack[top--];
-//				top--;	
-//			} else{
-//				stack[++top]=c;
-//			}
-//		}
-//		
-//	}
-//	while(top!=-1){
-//		postfix[x++]=stack[top--];
-//	}
-//	postfix[x] = '\0';
-//}
-
-int derajatOperator(infotype oper){
-	if(oper=='+' || oper=='-'){
-		return 1;
-	} else if(oper=='*' || oper=='/'){
-		return 2;
-	} else if(oper=='^' || oper=='v'){
-		return 3;
-	} else{
-		printf("Error, Operator Tidak Diketahui: %c", oper);
-        exit(1);
-	}
-}
-
-int isOperator(infotype oper){
-	if(oper=='+' || oper=='-' || oper=='*' || oper=='/' || oper=='^'||oper=='v'){
-		return 1;
-	} 
-	return 0;
-}
-
-
-
-//address BuildTree(infotype postfix[]){
-//	address P;
-//	address stack[50];
-//	int i, len, top=-1;
-//	infotype c;
-//	
-//	len=strlen(postfix);
-//	
-//	for(i=0;i<len;i++){
-//		c=postfix[i];
-//		if(isdigit(c)){
-//			P=CreateNode(c);
-//		} else{
-//			P=CreateNode(c);
-//			right(P)=stack[top--];
-//			left(P)=stack[top--];
-//		}
-//		stack[++top]=P;
-//	}
-//	return(stack[0]);
-//}
-
 void PostOrder(address P){
 	
 	if(P!=Nil){
@@ -296,7 +206,6 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 				}
 				sudut[j]='\0';
 				angka=strtod(sudut, NULL);
-				printf("trigono: %s angka: %f", trigono, angka);
 				hasil=prosesPerhitunganTrigonometri(angka,trigono,&*valid);
 				hasil*=f;
 				EnqueOperand(&*Z, hasil);
@@ -394,7 +303,6 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 				
 			}else{
 				printf("\t\t\tformat yang anda masukkan salah: ");
-//				Z->invalid=1;
 			}
 		}else if(token=='v'&&!isdigit(input[i-1])){
 			i++;

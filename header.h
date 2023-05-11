@@ -13,7 +13,6 @@ typedef struct Elemen{
 	double operand;
 	address right;
 	address left;
-//	int isOperator;
 }Tree;
 
 typedef struct Node *node;
@@ -21,7 +20,6 @@ typedef struct Node{
 	node next;
 	infotype oprtr;
 	double operand;
-//	int isoperator;
 }ElmtList;
 
 typedef struct{
@@ -33,11 +31,8 @@ typedef struct {
 	node Last;
 }Queue;
 
-
-//void InfixToPostfix(infotype* input, infotype postfix[]);
 int derajatOperator(infotype oper);
 int isOperator(infotype oper);
-//address BuildTree(infotype postfix[]);
 void PostOrder(address P);
 void ViewAsc(Queue First);
 void EnqueOperand(Queue *First, double item);
@@ -57,12 +52,9 @@ double DequeOperand(Queue *A);
 double faktorial(double n);
 node CreateNodeList();
 double prosesPerhitunganTrigonometri(double angka, char operator[],int *valid);
-node CreateNodeList();
-double processLogarithm(double angka,double base, char *operator,int *valid);
 double naturalLogarithm(double number);
 double logarithm(double number, double base);
 double operasiPembagian(double bilangan1, double bilangan2);
-double operasiSinus(double sudut);
 double operasiSinus(double sudut);
 double operasiCosinus(double sudut);
 double operasiTangen(double sudut);
