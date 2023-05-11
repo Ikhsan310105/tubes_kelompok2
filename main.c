@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <ctype.h>
 #include "header.h"
 
@@ -9,7 +10,7 @@ int main(int argc, char *argv[]) {
 	float hasil;
 	char input[30],temp,temp1[20];
 	char lagi;
-	int valid;
+	bool valid;
 	Queue Z;
 	
 	do{
@@ -39,7 +40,7 @@ int main(int argc, char *argv[]) {
 		}else{
 			fflush(stdin);
 			convertPostfix(&Z,input,&valid);
-			if(valid==1){
+			if(valid==true){
 				insert_to_history(input);
 				P=Create_Tree(Z);
 				hasil=kalkulasi(P);
@@ -73,6 +74,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}while(lagi=='y'||lagi=='Y');
+	
 	return 0;
 }
 

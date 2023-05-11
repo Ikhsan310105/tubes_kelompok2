@@ -31,12 +31,13 @@ typedef struct {
 	node Last;
 }Queue;
 
+
 int derajatOperator(infotype oper);
 int isOperator(infotype oper);
 void PostOrder(address P);
 void ViewAsc(Queue First);
 void EnqueOperand(Queue *First, double item);
-void convertPostfix(Queue *Z,char *input,int *valid);
+void convertPostfix(Queue *Z,char *input,bool *valid);
 void ViewAscStack(Stack First);
 Stack PushStack(Stack First, char item);
 char PopStack(Stack *First);
@@ -51,7 +52,7 @@ float Perpangkatan(float bilangan, float pangkat);
 double DequeOperand(Queue *A);
 double faktorial(double n);
 node CreateNodeList();
-double prosesPerhitunganTrigonometri(double angka, char operator[],int *valid);
+double prosesPerhitunganTrigonometri(double angka, char operator[],bool *valid);
 double naturalLogarithm(double number);
 double logarithm(double number, double base);
 double operasiPembagian(double bilangan1, double bilangan2);

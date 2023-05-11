@@ -1,10 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <math.h>
 #include <ctype.h>
 
 #include "header.h"
+
+int derajatOperator(infotype oper){
+	if(oper=='+' || oper=='-'){
+		return 1;
+	} else if(oper=='*' || oper=='/'){
+		return 2;
+	} else if(oper=='^' || oper=='v'){
+		return 3;
+	} else{
+		printf("Error, Operator Tidak Diketahui: %c", oper);
+        exit(1);
+	}
+}
+
+int isOperator(infotype oper){
+	if(oper=='+' || oper=='-' || oper=='*' || oper=='/' || oper=='^'||oper=='v'){
+		return 1;
+	} 
+	return 0;
+}
 
 void PostOrder(address P){
 	
@@ -133,7 +154,7 @@ void EnqueOperand(Queue *Q, double item){
 	}
 }
 
-void convertPostfix(Queue *Z, char *input, int *valid){
+void convertPostfix(Queue *Z, char *input, bool *valid){
 	node P;
 	Stack X;
 	char token, c, negatif;
@@ -187,14 +208,13 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 					i++;
 				}
 				if(input[i]!=')'){
-					*valid=0;
+					*valid=false;
 				}
 				sudut[j]='\0';
 				angka=strtod(sudut, NULL);
 				hasil=prosesPerhitunganTrigonometri(angka,trigono,&*valid);
 				EnqueOperand(&*Z, hasil);	
-			}
-			else{
+			}else{
 				f=DequeOperand(&*Z);
 				while(input[i]!=')'){
 					if(isdigit(input[i]) || input[i]=='.'){
@@ -248,11 +268,28 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 						hasil=logarithm(angka,o);
 						EnqueOperand(&*Z, hasil);
 					}else{
-						*valid=0;
+						*valid=false;
 					}
-				}else{
-					*valid=0;
-				}	
+				}else if((input[i+1]=='n')&&(input[i+2]=='(')){
+					i=i+3;
+					while((input[i]!=')')&&(isdigit(input[i]))||(input[i]!=')')&&(input[i]=='.')){
+						num[j++]=input[i];
+						i++;
+					}
+					num[j]='\0';
+					if(input[i]==')'){
+						angka=strtof(num, NULL);
+						if(angka==0){
+							*valid=false;
+						}else{
+							hasil=naturalLogarithm(angka);
+							hasil*=o;
+							EnqueOperand(&*Z, hasil);
+						}
+					}else{
+					*valid=false;
+					}
+				}
 			}else{
 				if((input[i+1]=='o')&&(input[i+2]=='g')&&(input[i+3]=='(')){
 					i=i+4;
@@ -266,7 +303,7 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 						hasil=logarithm(angka,10);
 						EnqueOperand(&*Z, hasil);
 					}else{
-						*valid=0;
+						*valid=false;
 					}
 				}else if((input[i+1]=='n')&&(input[i+2]=='(')){
 					i=i+3;
@@ -278,16 +315,16 @@ void convertPostfix(Queue *Z, char *input, int *valid){
 					if(input[i]==')'){
 						angka=strtof(num, NULL);
 						if(angka==0){
-							*valid=0;
+							*valid=false;
 						}else{
 							hasil=naturalLogarithm(angka);
 							EnqueOperand(&*Z, hasil);
 						}
 					}else{
-						*valid=0;
+						*valid=false;
 					}
 				}else{
-					*valid=0;
+					*valid=false;
 				}
 			}
 		}else if(token=='('){
@@ -443,7 +480,7 @@ double faktorial(double n){
 	return hasil;
 }
 
-double prosesPerhitunganTrigonometri(double angka, char operator[], int *valid){
+double prosesPerhitunganTrigonometri(double angka, char operator[], bool *valid){
 	if(strcmp(operator,"sin(")==0){
 		return operasiSinus(angka);
 	}else if(strcmp(operator,"cos(")==0 ){
@@ -463,7 +500,7 @@ double prosesPerhitunganTrigonometri(double angka, char operator[], int *valid){
 	}else if(strcmp(operator,"cot(")==0 && angka!=0 && angka!=180 && angka!=360){
 		return operasiCotangen(angka);
 	}else{
-        *valid=0;
+        *valid=false;
         return 0;
 	}
 }
