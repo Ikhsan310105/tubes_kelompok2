@@ -95,21 +95,40 @@ float Perpangkatan(float bilangan, float pangkat){
 }
 
 
- void printTree(address root, int space) {
+void printTree(address root, int space) {
     if (root == NULL) {
         return;
     }
     int i;
-    space += 5;
-    printTree(root->right, space);
+    space += 1;
     printf("\n");
-    for (i = 5; i < space; i++) {
-        printf(" ");
+    for (i = 1; i < space; i++) {
+        printf("-");
     }
     if(root->data!='\0'){
-    printf("%c\n", root->data);
+    printf("%c", root->data);
 	}else{
 		printf("%.2f",root->operand);
 	}
+    printTree(root->right, space);
     printTree(root->left, space);
 }
+
+// void printTree(address root, int space) {
+//    if (root == NULL) {
+//        return;
+//    }
+//    int i;
+//    space += 5;
+//    printTree(root->right, space);
+//    printf("\n");
+//    for (i = 5; i < space; i++) {
+//        printf(" ");
+//    }
+//    if(root->data!='\0'){
+//    printf("%c\n", root->data);
+//	}else{
+//		printf("%.2f",root->operand);
+//	}
+//    printTree(root->left, space);
+//}

@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 				insert_to_history("--------------------------------------------------------------------");
 				insert_to_history("\n");
 				printf("\t\t\thasilnya adalah %.2f\n", hasil);
-//				printTree(P,0);
+				printTree(P,0);
 //				printf("\n\t\t\tPostOrder: ");
 //				PostOrder(P);
 			}else{
